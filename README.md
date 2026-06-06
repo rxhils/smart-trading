@@ -27,14 +27,23 @@ SmartMoney India is deliberately minimal. Three screens, each with a clear job.
 ┌──────────────────────────────────────────────────────────────┐
 │  Screen 1 — Chat                                             │
 │                                                              │
-│  Ask anything about Indian stocks, sectors, or the market.  │
-│  The assistant answers with grounded data and a clear "why"  │
-│  — not a generic, hedged non-answer.                         │
+│  Two modes, one interface — switches automatically based on  │
+│  whether a broker is connected.                              │
 │                                                              │
-│  Examples:                                                   │
+│  WITHOUT broker connected — market mode:                     │
 │  "Why did HDFC Bank drop today?"                             │
 │  "Is the IT sector in a rotation out phase?"                 │
 │  "What's Reliance's RSI and trend right now?"                │
+│                                                              │
+│  WITH broker connected — portfolio mode:                     │
+│  "How is my portfolio doing today?"                          │
+│  "Which of my holdings are in a downtrend?"                  │
+│  "Why is Infosys down — should I be worried given my         │
+│   position size?"                                            │
+│  "Am I overexposed to IT right now?"                         │
+│                                                              │
+│  In both modes, answers are grounded in real market data     │
+│  and explain the "why" — not generic hedged responses.       │
 └──────────────────────────────────────────────────────────────┘
 
 ┌──────────────────────────────────────────────────────────────┐
@@ -51,9 +60,12 @@ SmartMoney India is deliberately minimal. Three screens, each with a clear job.
 │  Screen 3 — Broker Settings                                  │
 │                                                              │
 │  Connect your broker in read-only mode.                      │
-│  The app never places a trade. It only reads your holdings   │
-│  so the chat assistant can answer questions about your own   │
-│  portfolio context.                                          │
+│  The app never places a trade.                               │
+│                                                              │
+│  Once connected, the chat assistant becomes personal —       │
+│  it knows your actual holdings, position sizes, and P&L,     │
+│  and uses that context to give answers specific to you,      │
+│  not the general market.                                     │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -100,7 +112,13 @@ SmartMoney India is deliberately minimal. Three screens, each with a clear job.
   ┌──────────────────────────────────────────────────┐
   │  Broker API (read-only)                          │
   │  Zerodha Kite / Upstox / others                  │
-  │  Holdings, P&L — never order placement           │
+  │                                                  │
+  │  Holdings · Position sizes · Entry prices        │
+  │  Current P&L · Sector exposure · Cash            │
+  │                                                  │
+  │  Feeds into reasoning alongside market signals   │
+  │  so chat answers are personal, not just general  │
+  │  Never order placement                           │
   └──────────────────────────────────────────────────┘
 ```
 
@@ -132,33 +150,49 @@ SmartMoney India uses **[bharat-research-brain](https://github.com/rxhils/bharat
 
 ## The reasoning layer — FinRobot-style multi-agent flow
 
-When the user asks a question, the app does not simply forward it to an LLM and return whatever it says. It follows a structured multi-agent flow:
+When the user asks a question, the app does not simply forward it to an LLM and return whatever it says. It follows a structured multi-agent flow that merges market data with the user's personal portfolio context when a broker is connected:
 
 ```
 User question
       │
       ▼
-Agent 1 — Data fetcher
-  Pulls relevant signals from bharat-research-brain:
-  stock scores, technical state, news, macro regime,
-  sector rotation, and (if connected) broker holdings
+Agent 1 — Context builder
+  Determines what the question is about:
+  a market question, a stock question, or a portfolio question?
+
+  Market signals pulled from bharat-research-brain:
+    stock scores, RSI, MACD, EMA, news, macro regime,
+    sector rotation, FII/DII flows, FinBERT sentiment
+
+  Portfolio context pulled from broker (if connected):
+    holdings, position sizes, current P&L, entry prices,
+    sector exposure, cash allocation
 
       │
       ▼
 Agent 2 — Reasoning
-  Reads the raw data and forms an analysis:
-  What is actually happening? What is driving it?
-  Is this signal reliable in the current macro regime?
+  Combines market signals with portfolio context.
+
+  For market questions:
+    What is driving this stock or sector? Is the signal
+    reliable in the current macro regime?
+
+  For portfolio questions:
+    How does the market signal interact with the user's
+    specific position? Is their exposure a concern given
+    what is happening in the sector today?
 
       │
       ▼
 Agent 3 — Answer writer
-  Writes a short, clear, plain-English explanation.
+  Writes a short, grounded, plain-English explanation.
+  Personalised when portfolio context is available.
   Cites the data it used. Avoids advisory language.
   Returns the answer to the chat screen.
 ```
 
-This keeps answers structured, grounded, and useful — rather than generic.
+**The key difference from a generic chatbot:**
+A question like "why is Infosys down?" returns a market explanation to any user. But with a broker connected, the same question also considers your position size, your sector exposure, and your entry price — and the answer reflects that context. The data is still objective; the framing is personal.
 
 ---
 
