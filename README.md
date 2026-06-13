@@ -1,8 +1,8 @@
 <div align="center">
 
-<img src="docs/logo.png" alt="MAVEN" width="96" height="96" />
+# Maven AI
 
-# MAVEN
+<img src="docs/logo.png" alt="Maven AI" width="104" height="104" />
 
 **A finance intelligence system for Indian markets — chat, portfolio analytics, and read-only broker data, in one place.**
 
@@ -29,10 +29,10 @@ The core principle across the whole system: **the language model never invents a
 | ![Market Mode](docs/screenshots/01-ask-ai.png) | ![AI Portfolios](docs/screenshots/02-portfolios.png) | ![Focus baskets](docs/screenshots/03-focus.png) |
 | Ask anything about NSE/BSE — grounded, verified answers. | AI model portfolios, ranked _(UI live; engine in progress)_. | Thematic sector baskets _(UI live; engine in progress)_. |
 
-| Broker · Account · Memory |
-|:---:|
-| ![Broker](docs/screenshots/04-broker.png) |
-| Read-only broker connect, guest-first accounts, and the dev-only memory-container inspector. |
+| Broker · Account · Memory | Sign in |
+|:---:|:---:|
+| ![Broker](docs/screenshots/04-broker.png) | ![Sign in](docs/screenshots/05-auth.png) |
+| Read-only broker connect, guest-first accounts, and the dev-only memory-container inspector. | Premium email + Google sign-in — the app works without an account. |
 
 ---
 
