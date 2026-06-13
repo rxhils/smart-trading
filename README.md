@@ -1,312 +1,137 @@
-<p align="center">
-  <h1 align="center">SmartMoney India</h1>
-  <h4 align="center">A premium Indian-market investing copilot — chat, AI portfolios, and read-only broker data in one calm app</h4>
-</p>
+<div align="center">
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Platform-iOS%20%2F%20Android-black?style=flat-square&logo=apple" />
-  <img src="https://img.shields.io/badge/Built%20with-Expo%20%2F%20React%20Native-0A0A0A?style=flat-square&logo=expo" />
-  <img src="https://img.shields.io/badge/Market-NSE%20%2F%20BSE-blue?style=flat-square" />
-  <img src="https://img.shields.io/badge/Research-bharat--research--brain-orange?style=flat-square" />
-  <img src="https://img.shields.io/badge/Trades-0%20(read--only)-brightgreen?style=flat-square" />
-</p>
+# Maven AI
 
----
+<img src="docs/logo.png" alt="Maven AI" width="104" height="104" />
 
-## The idea in one sentence
+**A finance intelligence system for Indian markets — chat, portfolio analytics, and read-only broker data, in one place.**
 
-> Most market apps overwhelm you with alerts, charts, and noise. This one does the opposite — it answers your question, shows you how AI portfolios are performing, and lets you see your own holdings. That's it.
+`NSE / BSE` · `AI-native` · `read-only & SEBI-safe` · `built on Bharat Research Brain`
+
+</div>
 
 ---
 
-## Three screens. Nothing more.
+## What MAVEN is
 
-SmartMoney India is deliberately minimal. Three screens, each with a clear job.
+MAVEN is a premium Indian-market investing copilot. It started as a market-intelligence assistant and is evolving into a broader finance operating system — one that explains the market, reads your real holdings (read-only), and stays strictly inside the descriptive-analytics lane rather than giving investment advice.
+
+The core principle across the whole system: **the language model never invents a number.** Deterministic Python computes every figure, the model only composes prose around it, and a verifier audits the result before it ever reaches the screen.
+
+> **Status:** actively in development. Market intelligence and read-only portfolio analytics are live; AI Portfolios and Focus baskets are built as polished UI on seeded data and are being moved onto the real research engine next. The sections below are explicit about what's shipped vs. what's still in progress.
+
+---
+
+## Screenshots
+
+| Market Mode | Portfolios | Focus |
+|:---:|:---:|:---:|
+| ![Market Mode](docs/screenshots/01-ask-ai.png) | ![AI Portfolios](docs/screenshots/02-portfolios.png) | ![Focus baskets](docs/screenshots/03-focus.png) |
+| Ask anything about NSE/BSE — grounded, verified answers. | AI model portfolios, ranked _(UI live; engine in progress)_. | Thematic sector baskets _(UI live; engine in progress)_. |
+
+| Broker · Account · Memory | Sign in |
+|:---:|:---:|
+| ![Broker](docs/screenshots/04-broker.png) | ![Sign in](docs/screenshots/05-auth.png) |
+| Read-only broker connect, guest-first accounts, and the dev-only memory-container inspector. | Premium email + Google sign-in — the app works without an account. |
+
+---
+
+## How it works
+
+### 1 · Market Mode — the intelligence layer ✅
+A ChatGPT-style assistant scoped to Indian equities. Ask "why is Nifty up today?", "Reliance Q4 — what changed", or "HDFC Bank vs Kotak" and get a grounded answer built from NSE/BSE end-of-day data and filings. Every number is traced back to the source facts; advice, price targets and unverifiable event claims are blocked at the content layer. Specialised lanes cover market briefs, why-a-stock-moved, news, screeners, FII/DII flows and sector heatmaps.
+
+### 2 · Portfolio / Focus Mode — your holdings, described ✅ (descriptive lane)
+Connect a broker **read-only** (Zerodha via Kite Connect hosted login; Anand Rathi via issued API keys) — MAVEN never sees your password and never places a trade. It then answers questions about *your* portfolio: health, concentration, red flags, sector exposure, return attribution and benchmark comparison.
+
+This stays deliberately inside **SEBI-safe descriptive analytics** (the statistical-summary lane): it summarises allocation, concentration, exposure, overlap, attribution and risk signals, and **refuses** buy/sell recommendations, allocation calls and price forecasts — pivoting those to "here's how your money is already allocated" instead.
+
+### 3 · Memory — private per user, per mode ✅
+Personalization that's isolated at the storage layer, not just in app logic. Every memory read/write requires an authenticated user id, with separate containers for shared project memory, private user memory, Market Mode and Portfolio Mode. One account can never recall another's memory, and Market and Portfolio memory never mix for the same account. Validator-gated (nothing enters memory unless it already passed verification), with a local backend and a Supermemory adapter.
+
+### 4 · Bharat Research Brain — the reasoning core 🚧
+The Python research pipeline behind MAVEN: data ingestion → feature engineering → regime detection → structured reasoning → validation, with a curated few-shot example library and a backtest/eval harness. It powers Market Mode today. **The aspiration** is to make it the engine behind AI Portfolios and Focus baskets — using research-backed reasoning, structured market data, scoped memory, feedback loops and validated outputs to make those systems more accurate and consistent over time. That wiring is not built yet; the brain currently serves market intelligence.
+
+---
+
+## Status
+
+Legend: ✅ shipped · 🚧 in progress · ⬜ planned
+
+| Area | Status | What it does | What's left |
+|---|---|---|---|
+| **Market Mode** | ✅ | Verified NSE/BSE Q&A, briefs, news, screeners, FII/DII, heatmaps | Broaden universe to full NIFTY 500; intraday + fundamentals data |
+| **Portfolio / Focus Mode** | ✅ | Read-only broker link + descriptive analytics (health, exposure, attribution, benchmark) | Earnings calendar & richer fundamentals; more brokers |
+| **Memory** | ✅ | User- and mode-scoped, validator-gated, local + Supermemory | Auto-populate Portfolio-mode memory once it has an AI writer |
+| **Debug tooling** | ✅ | Dev-only memory-container inspector (names + backend, never contents) | — |
+| **Authentication** | ✅ | Email/password (PBKDF2 + SQLite), Google hosted-login, per-account data binding | Real Google OAuth credentials; password reset; SecureStore |
+| **AI Portfolios** | 🚧 | Polished ranked-leaderboard UI | Real backtested model portfolios on the research engine (currently seeded data) |
+| **Focus baskets** | 🚧 | Polished thematic-basket UI | Real basket construction + tracking on the research engine (currently seeded data) |
+| **Bharat Research Brain** | 🚧 | Powers Market Mode (ingest → reason → validate) | Wire it to drive AI Portfolios & Focus; feedback loops |
+| **Branding** | ✅ | Logo, luxe theme, premium auth page | — |
+| **Documentation** | 🚧 | This README + in-code design notes | Public setup guide, architecture deep-dive |
+
+---
+
+## Architecture
 
 ```
-┌──────────────────────────────────────────────────────────────┐
-│  Screen 1 — Chat                                             │
-│                                                              │
-│  Two modes, one interface — switches automatically based on  │
-│  whether a broker is connected.                              │
-│                                                              │
-│  WITHOUT broker connected — market mode:                     │
-│  "Why did HDFC Bank drop today?"                             │
-│  "Is the IT sector in a rotation out phase?"                 │
-│  "What's Reliance's RSI and trend right now?"                │
-│                                                              │
-│  WITH broker connected — portfolio mode:                     │
-│  "How is my portfolio doing today?"                          │
-│  "Which of my holdings are in a downtrend?"                  │
-│  "Why is Infosys down — should I be worried given my         │
-│   position size?"                                            │
-│  "Am I overexposed to IT right now?"                         │
-│                                                              │
-│  In both modes, answers are grounded in real market data     │
-│  and explain the "why" — not generic hedged responses.       │
-└──────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────┐
-│  Screen 2 — AI Portfolios                                    │
-│                                                              │
-│  Different AI strategies compete in the Indian market.       │
-│  Each portfolio has a style (Stable / Balanced / Bold) and   │
-│  a live performance score. No human discretion. No bias.     │
-│                                                              │
-│  See: returns over time, rankings, strategy style.           │
-└──────────────────────────────────────────────────────────────┘
-
-┌──────────────────────────────────────────────────────────────┐
-│  Screen 3 — Broker Settings                                  │
-│                                                              │
-│  Connect your broker in read-only mode.                      │
-│  The app never places a trade.                               │
-│                                                              │
-│  Once connected, the chat assistant becomes personal —       │
-│  it knows your actual holdings, position sizes, and P&L,     │
-│  and uses that context to give answers specific to you,      │
-│  not the general market.                                     │
-└──────────────────────────────────────────────────────────────┘
+┌───────────────────────────┐    HTTP (localhost)     ┌─────────────────────────────┐
+│  Expo / React Native app   │ ──────────────────────▶ │  Local bridge (serve.py)     │
+│  • Ask AI (Market Mode)    │                         │  • /chat, /assess            │
+│  • Portfolios · Focus      │                         │  • /portfolio/* (read-only)  │
+│  • Broker · Account        │                         │  • /auth/* · /memory/debug   │
+└───────────────────────────┘                         └──────────────┬──────────────┘
+                                                                      │
+                                            ┌─────────────────────────▼──────────────────────────┐
+                                            │  Bharat Research Brain  (market-model/, Python)      │
+                                            │  ingest → features → regime → reasoning → verifier   │
+                                            │  validator-gated memory · few-shot evals             │
+                                            └──────────────────────────────────────────────────────┘
 ```
 
----
-
-## How the app works end-to-end
-
-```
-                    ┌─────────────────────────┐
-                    │   SmartMoney India App   │
-                    │   (Expo / React Native)  │
-                    └────────────┬────────────┘
-                                 │
-             ┌───────────────────┼───────────────────┐
-             │                   │                   │
-             ▼                   ▼                   ▼
-    ┌──────────────┐   ┌──────────────────┐   ┌────────────────┐
-    │  Chat Screen │   │  AI Portfolios   │   │ Broker Screen  │
-    │              │   │  Leaderboard     │   │ (read-only)    │
-    └──────┬───────┘   └────────┬─────────┘   └───────┬────────┘
-           │                    │                      │
-           ▼                    ▼                      │
-  ┌─────────────────────────────────────┐              │
-  │       FinRobot-style Reasoning      │              │
-  │                                     │              │
-  │  Agent 1: Data fetcher              │              │
-  │  Agent 2: Reasoning / analysis      │              │
-  │  Agent 3: Answer writer             │              │
-  └─────────────┬───────────────────────┘              │
-                │                                      │
-                ▼                                      │
-  ┌──────────────────────────────────────────────────┐ │
-  │         bharat-research-brain                    │ │
-  │                                                  │ │
-  │  India-specific research and retrieval layer.    │ │
-  │  507 NSE/BSE stocks · 27 agents · Ranked daily  │ │
-  │  Grounded market data, company context, signals  │ │
-  │                                                  │ │
-  │  → github.com/rxhils/bharat-research-brain       │ │
-  └──────────────────────────────────────────────────┘ │
-                                                        │
-                ┌───────────────────────────────────────┘
-                ▼
-  ┌──────────────────────────────────────────────────┐
-  │  Broker API (read-only)                          │
-  │  Zerodha Kite / Upstox / others                  │
-  │                                                  │
-  │  Holdings · Position sizes · Entry prices        │
-  │  Current P&L · Sector exposure · Cash            │
-  │                                                  │
-  │  Feeds into reasoning alongside market signals   │
-  │  so chat answers are personal, not just general  │
-  │  Never order placement                           │
-  └──────────────────────────────────────────────────┘
-```
-
----
-
-## The research layer — bharat-research-brain
-
-The assistant and the AI portfolios are only as good as the data behind them.
-
-SmartMoney India uses **[bharat-research-brain](https://github.com/rxhils/bharat-research-brain)** as its India-specific research and retrieval layer. It is a fully autonomous equity research engine built for NSE/BSE — running 27 agents nightly to rank 507 stocks and produce a grounded, cited daily report.
-
-**What bharat-research-brain provides to this app:**
-
-| Data | How the app uses it |
-|------|---------------------|
-| Daily 0–100 stock scores (507 stocks) | Powers the AI portfolio rankings |
-| Technical signals (RSI, MACD, EMA, VCP) | Backs up chat assistant answers |
-| Macro regime (Risk-On / Cautious / Risk-Off) | Context for portfolio style performance |
-| FinBERT-classified news (per stock) | "Why did this stock move?" answers |
-| Sector rotation signals | Chat and portfolio filtering |
-| Fundamentals (PE, ROE, FCF, D/E) | Fundamentals-based chat questions |
-| FII/DII institutional flows | Market context in answers |
-
-> **bharat-research-brain is the engine. SmartMoney India is the interface.**  
-> The engine runs locally overnight. The app reads its output.  
-> → [See the full engine documentation](https://github.com/rxhils/bharat-research-brain)
-
----
-
-## The reasoning layer — FinRobot-style multi-agent flow
-
-When the user asks a question, the app does not simply forward it to an LLM and return whatever it says. It follows a structured multi-agent flow that merges market data with the user's personal portfolio context when a broker is connected:
-
-```
-User question
-      │
-      ▼
-Agent 1 — Context builder
-  Determines what the question is about:
-  a market question, a stock question, or a portfolio question?
-
-  Market signals pulled from bharat-research-brain:
-    stock scores, RSI, MACD, EMA, news, macro regime,
-    sector rotation, FII/DII flows, FinBERT sentiment
-
-  Portfolio context pulled from broker (if connected):
-    holdings, position sizes, current P&L, entry prices,
-    sector exposure, cash allocation
-
-      │
-      ▼
-Agent 2 — Reasoning
-  Combines market signals with portfolio context.
-
-  For market questions:
-    What is driving this stock or sector? Is the signal
-    reliable in the current macro regime?
-
-  For portfolio questions:
-    How does the market signal interact with the user's
-    specific position? Is their exposure a concern given
-    what is happening in the sector today?
-
-      │
-      ▼
-Agent 3 — Answer writer
-  Writes a short, grounded, plain-English explanation.
-  Personalised when portfolio context is available.
-  Cites the data it used. Avoids advisory language.
-  Returns the answer to the chat screen.
-```
-
-**The key difference from a generic chatbot:**
-A question like "why is Infosys down?" returns a market explanation to any user. But with a broker connected, the same question also considers your position size, your sector exposure, and your entry price — and the answer reflects that context. The data is still objective; the framing is personal.
-
----
-
-## AI portfolio styles
-
-The portfolio screen shows different AI strategies competing in real time:
-
-| Style | What it means |
-|-------|--------------|
-| **Stable** | Conservative stocks, lower volatility, consistent compounders |
-| **Balanced** | Mix of growth and stability, sector-diversified |
-| **Bold** | Higher-conviction, higher-risk setups — momentum and growth |
-
-Each style is backed by a distinct scoring profile from bharat-research-brain. The leaderboard shows:
-- Cumulative return over time
-- Current ranking vs other styles
-- Underlying stock selections
-
-No human picks stocks. The engine scores them. The portfolio style is just a filter on those scores.
-
----
-
-## What the app does not do
-
-This is as important as what it does.
-
-- **No trading.** The app cannot place, modify, or cancel orders. Ever.
-- **No watchlists.** No cluttered lists to manage.
-- **No price alerts.** No notification spam.
-- **No charts.** The assistant explains the "why" in words.
-- **No tips or recommendations.** Answers are grounded in data, not advice.
-
-The goal is a calm, focused tool — not another noisy trading terminal.
+Secrets (model + data keys) live only in the bridge, never in the app bundle. The app only ever receives already-verified, schema-valid output.
 
 ---
 
 ## Tech stack
 
-| Layer | Technology |
-|-------|-----------|
-| App framework | Expo (React Native) |
-| Language | TypeScript |
-| Navigation | Expo Router |
-| Lists | FlashList |
-| Animations | Reanimated 3 |
-| State | Zustand |
-| Data fetching | TanStack Query |
-| Research layer | [bharat-research-brain](https://github.com/rxhils/bharat-research-brain) (FastAPI, PostgreSQL, 27 agents) |
-| Broker integration | Zerodha Kite API (read-only) / Upstox API |
-| Reasoning | FinRobot-style multi-agent (Claude / local LLM) |
+- **App:** Expo (SDK 56) · React Native · TypeScript (strict) · Expo Router · Reanimated · Zustand
+- **Research core:** Python · pandas / numpy · pydantic · NSE/BSE ingestion · DeepSeek (reasoning, server-side only)
+- **Memory:** local JSONL + Supermemory adapter, container-scoped per tenant
+- **Broker:** Zerodha Kite Connect (hosted OAuth) · Anand Rathi (XTS API keys) — read-only, encrypted at rest
+- **Testing:** Jest + React Native Testing Library (app) · pytest (research core)
 
 ---
 
-## Build phases
+## Roadmap
 
-| Phase | Status | What it delivers |
-|-------|--------|-----------------|
-| 1 — Chat foundation | 🔄 In progress | Chat screen, basic question answering, market context |
-| 2 — Research wiring | ⏳ Planned | Connect to bharat-research-brain API, grounded answers |
-| 3 — AI portfolios | ⏳ Planned | Portfolio leaderboard, style grouping, performance over time |
-| 4 — Broker settings | ⏳ Planned | Read-only broker connection, holdings context in chat |
-| 5 — Reasoning layer | ⏳ Planned | Full FinRobot-style multi-agent answer pipeline |
-| 6 — Polish | ⏳ Planned | Animations, accessibility, reduced-motion gating |
+1. **Move AI Portfolios & Focus onto the real engine** — replace seeded data with backtested, research-driven portfolios from Bharat Research Brain.
+2. **Deepen the data layer** — full NIFTY 500 universe, earnings calendar, fundamentals.
+3. **Close the personalization loop** — populate Portfolio-mode memory; feed signals back into the research core.
+4. **Productionize auth** — real Google OAuth, password reset, secure token storage, chat history per account.
+5. **More brokers** — Groww, Upstox, Angel One, HDFC Sky (all read-only).
 
 ---
 
-## Project structure
+## Safety & compliance
 
-```
-smart-trading/
-├── app/                    # Expo Router screens
-│   ├── (tabs)/
-│   │   ├── index.tsx       # Screen 1 — Chat
-│   │   ├── portfolios.tsx  # Screen 2 — AI Portfolios
-│   │   └── settings.tsx    # Screen 3 — Broker Settings
-│   └── _layout.tsx
-├── components/
-│   ├── chat/               # Message bubbles, input bar, loading states
-│   ├── portfolio/          # Portfolio cards, leaderboard rows, style chips
-│   └── shared/             # Buttons, badges, section headers
-├── services/
-│   ├── research.ts         # bharat-research-brain API client
-│   ├── broker.ts           # Read-only broker API integration
-│   └── reasoning.ts        # Multi-agent answer pipeline
-├── store/                  # Zustand state slices
-└── constants/              # Design tokens, theme
-```
+- **Read-only broker access** — no trade execution exists anywhere in the codebase.
+- **Descriptive analytics only** — portfolio views summarise state; they do not recommend, allocate or forecast.
+- **Educational framing** — market analysis, not investment advice.
+- **Privacy by construction** — broker tokens encrypted at rest; memory isolated per account at the storage layer.
+
+> Not investment advice. MAVEN is an educational analytics tool. _(Not legal advice — consult a professional before shipping any advice feature.)_
 
 ---
 
-## Research infrastructure
+## Contact
 
-This app is the consumer layer. The research infrastructure that powers it lives here:
+<!-- TODO(rxhils): replace these placeholders -->
+- **Author:** rxhils
+- **GitHub:** https://github.com/rxhils
+- **Email / X / LinkedIn:** _add links here_
 
-**[→ bharat-research-brain](https://github.com/rxhils/bharat-research-brain)**
-
-> 507 NSE/BSE stocks · 27 agents · Daily rankings · Self-learning · Fully local · ₹0/month
-
-If you want to understand the signals behind the chat answers and portfolio rankings, that is the right place to start.
-
----
-
-## Compliance
-
-- This app is for **personal research only**
-- No order placement code exists anywhere in this repository
-- Broker integration is strictly read-only
-- Not registered with SEBI as an investment adviser
-- Output is never used for advisory services
-
----
-
-## Related
-
-| Repo | What it is |
-|------|-----------|
-| [bharat-research-brain](https://github.com/rxhils/bharat-research-brain) | The research engine — 507 stocks, 27 agents, daily rankings |
+<div align="center">
+<sub>Built in public · evolving from market intelligence into a finance operating system.</sub>
+</div>
